@@ -178,11 +178,12 @@ total
 # 12. Statements can be grouped together using braces ‘{’ and ‘}’. A group of statements is sometimes called a block. Single statements are evaluated when a new line is typed at the end of the syntactically complete statement. Blocks are not evaluated until a new line is entered after the closing brace.
 
 ```{r}
-x <- {0 + x + 5 + 3}
+x <- {0 + x + 5 + 3} 
+#error code
 ```
 
 # Describe the output.
-# answer: he line is incomplete. Thus, it caused an error.
+# answer: the line is incomplete. Thus, it caused an error.
 
 
 # 13. Set up a vector named score
@@ -218,3 +219,4 @@ age = readline(prompt="Input your age: ")
 print(paste("My name is",name, "and I am",age ,"years old."))
 print(R.version.string)
 ```
+# ma update ko  hsajgdshd
