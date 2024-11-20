@@ -233,3 +233,6 @@ legend("topright", legend = levels(iris$Species), col = 1:3, pch = 19)
 # c. From the variations.RData, create a barplot(). Complete the details of the chart which include the title, color, labels of each bar.
 
 # d. Create a barplot() for the black and white variations. Plot it in 1 frame, side by side. Complete the details of the chart.
+
+
+# asdgjhfbjgfkhasdfghjkl
