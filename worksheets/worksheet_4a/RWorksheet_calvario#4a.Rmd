@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# 1.
+# 1. The table below shows the data about shoe size and height. Create a data frame.
 
 ```{r}
 sshframe <- data.frame(
@@ -23,11 +23,13 @@ sshframe <- data.frame(
 sshframe
 ```
 
-# a.
+# a. Describe the data.
 
 # The data contains two sets of observations for shoe size, height, and gender.
 
-# b.
+# b. Create a subset by males and females with their corresponding shoe size and height. What its result? Show the R scripts.
+
+# The result of running the R code you provided will be two subsets of the sshframe data frame, one for males and one for females. Each subset will contain two columns: Shoe_size and Height, corresponding to the data for each gender.
 
 ```{r}
 males <- sshframe[sshframe$Gender == "M", c("Shoe_size", "Height")]
@@ -37,7 +39,7 @@ males
 females
 ```
 
-# c.
+# c. Find the mean of shoe size and height of the respondents. Write the R scripts and its result.
 
 ```{r}
 mean_shoe_size <- mean(sshframe$Shoe_size)
@@ -47,14 +49,16 @@ mean_shoe_size
 mean_height
 ```
 
-# d.
+# d. Is there a relationship between shoe size and height? Why?
+
+# There is often a moderate positive correlation between height and shoe size, but it is not a perfect relationship, as many other factors (such as genetics or age) also influence shoe size.
 
 ```{r}
 correlation <- cor(sshframe$Shoe_size, sshframe$Height)
 correlation
 ```
 
-# 2.
+# 2. Construct character vector months to a factor with factor() and assign the result to factor_months_vector. Print out factor_months_vector and assert that R prints out the factor levels below the actual values.
 
 ```{r}
 months_vector <- c(
@@ -69,7 +73,9 @@ factor_months_vector <- factor(months_vector)
 factor_months_vector
 ```
 
-# 3.
+# 3. Then check the summary() of the months_vector and factor_months_vector. Inter-pret the results of both vectors. Are they both equally useful in this case?
+
+#  Factors are generally preferred for handling categorical data, while character vectors are more basic and suitable for simple tasks
 
 ```{r}
 summary(months_vector)
@@ -77,7 +83,7 @@ summary(months_vector)
 summary(factor_months_vector)
 ```
 
-# 4.
+# 4. Create a vector and factor for the table below.
 
 ```{r}
 directions_vector <- c("East", "West", "North")
@@ -90,20 +96,21 @@ new_order_data <- factor(factor_data, levels = c("East", "West", "North"))
 new_order_data
 ```
 
-# 5.
+# 5. Enter the data below in Excel with file name = import_march.csv
 
-# a.
+# a. Import the excel file into the Environment Pane using read.table() function. Write the code.
 
 ```{r}
 data <- read.table("import_march.csv", header = TRUE, sep = ",")
 ```
 
-# b.
+# b. b. View the dataset. Write the R scripts and its result.
 
 ```{r}
 data
 ```
-# 6.
+
+# 6. Full Search
 
 # a. 
 
@@ -120,7 +127,7 @@ if(user_input == 20){
 }
 ```
 
-# 7.
+# 7. Change
 
 ```{r}
 minBills <- function(price) {
@@ -140,9 +147,9 @@ cat("Minimum number of bills needed:", minBills(snack_price), "\n")
 ```
 
 
-# 8.
+# 8. The following is each student’s math score for one semester. Based on this, answer the following questions.
 
-# a.
+# a. Create a dataframe from the above table. Write the R codes and its output.
 
 ```{r}
 students_data <- data.frame(
@@ -156,7 +163,7 @@ students_data <- data.frame(
 print(students_data)
 ```
 
-# b.
+# b. Without using the rowMean function, output the average score of students whose average math score over 90 points during the semester. write R code and its output.
 
 ```{r}
 calculate_average <- function(grades) {
@@ -175,7 +182,7 @@ for (i in 1:nrow(students_data)) {
 }
 ```
 
-# c.
+# c. Without using the mean function, output as follows for the tests in which the average score was less than 80 out of 4 tests.
 
 ```{r}
 for (j in 2:ncol(students_data)) {
@@ -188,7 +195,7 @@ for (j in 2:ncol(students_data)) {
 }
 ```
 
-# d. 
+# d. Without using the max function, output as follows for students whose highest score for a semester exceeds 90 points.
 
 ```{r}
 calculate_max <- function(grades) {
