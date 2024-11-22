@@ -4,12 +4,14 @@ author: "Jolien"
 date: "2024-11-06"
 output: html_document
 ---
+  
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # 1. Create a vector using : operator
+
 # a. Sequence from -5 to 5.
 
 ```{r}
