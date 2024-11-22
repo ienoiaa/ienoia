@@ -99,9 +99,84 @@ ggplot(mpg, aes(model, manufacturer)) + geom_point()
 # 3. Plot the model and the year using ggplot(). Use only the top 20 observations. Write the codes and its results.
 
 ```{r}
-ggplot(head(mpg_data, 20), aes(x = model, y = year)) +
+library(ggplot2)
+
+# Top 20 observations from the mpg_data dataset
+top_20_data <- head(mpg_data, 20)
+
+# Plot using ggplot2
+ggplot(top_20_data, aes(x = model, y = year)) +
   geom_point() +
-  labs(title = "Model vs Year (Top 20 Observations)", x = "Model", y = "Year") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+  labs(
+    title = "Model vs Year (Top 20 Observations)", 
+    x = "Model", 
+    y = "Year"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 90, hjust = 1),
+    plot.title = element_text(hjust = 0.5)  # Centering the title
+  )
 ```
+
+
+# 4. Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+
+# a. Plot using geom_bar() using the top 20 observations only. The graphs shoudl have a title, labels and colors. Show code and results.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+
+car_counts <- mpg_data %>%
+  group_by(model) %>%
+  summarise(count = n())
+
+top_20_models <- car_counts %>%
+  arrange(desc(count)) %>%
+  head(20)
+
+ggplot(top_20_models, aes(x = reorder(model, -count), y = count)) +
+  geom_bar(stat = "identity", fill = "violet") +
+  labs(
+    title = "Top 20 Models by Number of Cars",
+    x = "Car Model",
+    y = "Number of Cars"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))  # Rotate x-axis labels
+```
+
+
+# b. Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
+
+```{r}
+ggplot(top_20_models, aes(x = reorder(model, -count), y = count)) +
+  geom_bar(stat = "identity", fill = "pink") +
+  labs(
+    title = "Top 20 Models by Number of Cars (Horizontal)",
+    x = "Car Model",
+    y = "Number of Cars"
+  ) +
+  coord_flip() +   
+  theme_minimal()   
+```
+
+# 5. Plot the relationship between cyl - number of cylinders and displ - engine displacement using geom_point with aesthetic color = engine displacement. Title should be “Relationship between No. of Cylinders and Engine Displacement”.
+
+# a. How would you describe its relationship? Show the codes and its result.
+
+```{r}
+library(ggplot2)
+
+ggplot(mpg_data, aes(x = cyl, y = displ, color = displ)) +
+  geom_point() + 
+  labs(
+    title = "Relationship between No. of Cylinders and Engine Displacement",
+    x = "Number of Cylinders",
+    y = "Engine Displacement (L)"
+  ) +
+  scale_color_gradient(low = "violet", high = "cyan") +    
+  theme_minimal()
+```
+
+# The plot will show a scatter plot with the number of cylinders on the x-axis and the engine displacement on the y-axis. The points will be colored based on the engine displacement, where lower displacements will be shaded in violet, and higher displacements will be shaded in cyan.
 
