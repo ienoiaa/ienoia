@@ -174,9 +174,88 @@ ggplot(mpg_data, aes(x = cyl, y = displ, color = displ)) +
     x = "Number of Cylinders",
     y = "Engine Displacement (L)"
   ) +
-  scale_color_gradient(low = "violet", high = "cyan") +    
+  scale_color_gradient(low = "violet", high = "purple") +    
   theme_minimal()
 ```
 
-# The plot will show a scatter plot with the number of cylinders on the x-axis and the engine displacement on the y-axis. The points will be colored based on the engine displacement, where lower displacements will be shaded in violet, and higher displacements will be shaded in cyan.
+# The plot will show a scatter plot with the number of cylinders on the x-axis and the engine displacement on the y-axis. The points will be colored based on the engine displacement, where lower displacements will be shaded in violet, and higher displacements will be shaded in purple.
+
+
+# 6. Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped it with a continuous variable you have identified in #1-c.  
+
+
+```{r}
+ggplot(mpg_data, aes(x = displ, y = hwy, color = cty)) +
+  geom_point() +
+  labs(title = "Engine Displacement vs Highway MPG",
+       x = "Engine Displacement", y = "Highway MPG", color = "City MPG") +
+  scale_color_gradient(low = "purple", high = "violet")
+```
+
+# What is its result?
+# The results of this plot help explain how engine displacement and vehicle weight both affect fuel efficiency, revealing the trade-offs between engine size, vehicle weight, and fuel economy.
+
+# Why it produced such output?
+# The plot shows that as engine displacement (displ) increases, highway miles per gallon (hwy) decreases, with heavier vehicles (mapped by weight) generally having larger engines and lower fuel efficiency.
+
+
+# 6. Import the traffic.csv onto your R environment.
+
+```{r}
+traffic <- read.csv("traffic.csv")
+
+head(traffic)
+```
+
+
+# a. How many numbers of observation does it have? What are the variables of the traffic dataset? Show your answer.
+
+```{r}
+n_obs <- nrow(traffic)
+
+variables <- colnames(traffic)
+
+n_obs
+variables
+```
+
+# There are 48120 observations. The variables in the traffic dataset are: "DateTime" "Junction" "Vehicles" "ID". 
+
+# b. subset the traffic dataset into junctions. What is the R codes and its output?
+
+
+```{r}
+library(dplyr)
+
+junction_data <- traffic %>%
+  group_by(Junction) %>%
+  group_split()
+
+print(junction_data[[1]]) 
+```
+
+
+# c. Plot each junction in a using geom_line(). Show your solution and output.
+
+
+```{r}
+library(ggplot2)
+
+traffic$DateTime <- as.POSIXct(traffic$DateTime, format = "%Y-%m-%d %H:%M:%S")
+
+ggplot(traffic, aes(x = DateTime, y = Vehicles, color = factor(Junction))) +
+  geom_line() +  # Create the line plot
+  labs(title = "Traffic Counts by Junction Over Time",
+       x = "Date and Time",
+       y = "Number of Vehicles",
+       color = "Junction") +
+  scale_color_manual(values = c("1" = "#8A2BE2",    # Violet
+                               "2" = "#9400D3",    # Dark Violet
+                               "3" = "#EE82EE",    # Light Violet
+                               "4" = "#DA70D6",    # Orchid (light violet shade)
+                               "5" = "#E6E6FA")) +
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
+```
+
 
