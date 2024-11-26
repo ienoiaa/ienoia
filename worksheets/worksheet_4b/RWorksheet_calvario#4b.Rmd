@@ -224,15 +224,66 @@ legend("topright", legend = levels(iris$Species), col = 1:3, pch = 19)
 
 ```{r}
  library(knitr)
+ library(dplyr)
  values <- c(10, 5, 14)
  names <- c(4, 6, 8)
  colors <- c("red", "green", "blue")
  barplot(values, names.arg=names, col=colors, main="Change bar width", width=c(1, 0.5, 1.5))
+
+variations.RData <- alexa_data %>%
+  count(alexa_data$variation)
+
+save(variations.RData, file = "variations.RData")
+
+print(variations.RData)
 ```
 
 # c. From the variations.RData, create a barplot(). Complete the details of the chart which include the title, color, labels of each bar.
 
+```{r}
+barplot(
+  variations.RData$n, 
+  names.arg = variations.RData$`alexa_data$variation`, 
+  las = 2,
+  cex.names = 0.4,
+  main = "Count of Variations",         
+  ylab = "Count",                       
+  col = rainbow(length(variations.RData$n)),  
+  border = "purple"                        
+)
+```
+
+
 # d. Create a barplot() for the black and white variations. Plot it in 1 frame, side by side. Complete the details of the chart.
+
+```{r}
+bw_variations <- variations.RData %>%
+  filter(grepl("^Black|^White", `alexa_data$variation`))
+
+par(mfrow = c(1, 2))
+
+barplot(
+  bw_variations$n[bw_variations$`alexa_data$variation` %in% c("Black", "BlackPlus", "BlackShow", "BlackSpot", "BlackDot")], 
+  names.arg = bw_variations$`alexa_data$variation`[bw_variations$`alexa_data$variation` %in% c("Black", "BlackPlus", "BlackShow", "BlackSpot", "BlackDot")], 
+  las = 2,
+  cex.names = 1,
+  main = "Black Variations",         
+  ylab = "Count",                             
+  col = "violet",
+  border = "purple"
+)
+
+barplot(
+  bw_variations$n[bw_variations$`alexa_data$variation` %in% c("White", "WhitePlus", "WhiteShow", "WhiteSpot", "WhiteDot")], 
+  names.arg = bw_variations$`alexa_data$variation`[bw_variations$`alexa_data$variation` %in% c("White", "WhitePlus", "WhiteShow", "WhiteSpot", "WhiteDot")], 
+  las = 2,
+  cex.names = 1,
+  main = "White Variations",         
+  ylab = "Count",                              
+  col = "white",                              
+  border = "purple"                           
+)
+```
 
 
 # asdgjhfbjgfkhasdfghjkl
