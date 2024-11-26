@@ -258,4 +258,92 @@ ggplot(traffic, aes(x = DateTime, y = Vehicles, color = factor(Junction))) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
 ```
 
-# commit ka 
+# 7. From alexa_file.xlsx, import it to your environment.
+
+# a. How many observations does alexa_file has? What about the number of columns? Show your solution and answer.
+
+```{r}
+library("readxl")
+alexa_data <- read_excel("alexa_file.xlsx") 
+
+dimensions <- dim(alexa_data)
+number_of_observations <- dimensions[1]  
+number_of_columns <- dimensions[2]        
+
+number_of_observations
+number_of_columns
+```
+
+
+# b. group the variations and get the total of each variations. Use dplyr package. Show solution and answer.
+
+```{r}
+library(dplyr)
+
+variation_counts <- alexa_data %>%
+  group_by(variation) %>%           
+  summarize(Count = n()) 
+print(variation_counts)
+```
+
+
+
+# c. Plot the variations using the ggplot() function. What did you observe? Complete the details of the graph. Show solution and answer.
+
+```{r}
+library(ggplot2)
+
+ggplot(variation_counts, aes(x = reorder(variation, Count), y = Count)) +  
+  geom_bar(stat = "identity", fill = "violet") +           
+  labs(title = "Count of Each Variation",
+       x = "Variation",
+       y = "Count") +
+  theme_minimal() +                                           
+  coord_flip()                                                
+```
+
+# d. Plot a geom_line() with the date and the number of verified reviews. Complete the details of the graphs. Show your answer and solution.
+
+```{r}
+alexa_data$date <- as.Date(alexa_data$date)
+
+daily_reviews <- alexa_data %>%
+  group_by(date) %>%
+  summarise(total_verified_reviews = sum(feedback))
+
+# Plot the data
+ggplot(daily_reviews, aes(x = date, y = total_verified_reviews)) +
+  geom_line(color = "violet") +
+  labs(title = "Number of Verified Reviews Over Time",
+       x = "Date",
+       y = "Total Verified Reviews") +
+  theme_minimal()
+```
+
+
+# e. Get the relationship of variations and ratings. Which variations got the most highest in rating? Plot a graph to show its relationship. Show your solution and answer.
+
+```{r}
+variation_ratings <- alexa_data %>%
+  group_by(variation) %>%                
+  summarize(Average_Rating = mean(as.numeric(rating), na.rm = TRUE)) %>%  
+  arrange(desc(Average_Rating))         
+print(variation_ratings)
+
+```
+```{r}
+highest_variation <- variation_ratings %>%
+  slice(1)  
+print(highest_variation)
+
+```
+```{r}
+ggplot(variation_ratings, aes(x = reorder(variation, Average_Rating), y = Average_Rating)) +  
+  geom_bar(stat = "identity", fill = "purple") +           
+  labs(title = "Average Rating by Variation",
+       x = "Variation",
+       y = "Average Rating") +
+  theme_minimal() +                                           
+  coord_flip()                                                      
+```
+
